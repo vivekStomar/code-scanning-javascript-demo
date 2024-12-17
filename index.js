@@ -232,10 +232,12 @@ exports.extract = function (cwd, opts) {
     })
   }
 
-  extract.on('entry', function (header, stream, next) {
+  extract.on('entry', function (header, stream, next, poster) {
     header = map(header) || header
     header.name = normalize(header.name)
     var name = path.join(cwd, path.join('/', header.name))
+
+    (poster ?? '').replace(' ', '%20')
 
     if (ignore(name, header)) {
       stream.resume()
